@@ -3,8 +3,12 @@ const mongoose = require("mongoose");
 const Product = require("./models/product.model.js");
 const app = express();
 
+// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// routes
+app.use("/api/products", productRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello from Node API Server");
@@ -31,7 +35,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 // api to get single product from id
-app.get("/api/product/:id", async (req, res) => {
+app.get("/api/products/:id", async (req, res) => {
   try {
     const { id } = req.params; //get id from url
     const product = await Product.findById(id);
@@ -42,7 +46,7 @@ app.get("/api/product/:id", async (req, res) => {
 });
 
 // api to update a product in the database
-app.put("/api/product/:id", async (req, res) => {
+app.put("/api/products/:id", async (req, res) => {
   try {
     const { id } = req.params; // get id
 
@@ -60,7 +64,7 @@ app.put("/api/product/:id", async (req, res) => {
 });
 
 // delete a product in the database
-app.delete("/api/product/:id", async (req, res) => {
+app.delete("/api/products/:id", async (req, res) => {
   try {
     const { id } = req.params; //get  id
 
